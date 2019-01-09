@@ -16,10 +16,10 @@ app.use(express.json());
 // =============================================================
 
 var guests = [{
-    name: "",
-    phoneNumber: "",
-    email: "",
-    uniqueID: ""
+    name: "Brittany Wells",
+    phoneNumber: "987-098-6666",
+    email: "ast98@gmail.com",
+    uniqueID: "1"
 }];
 
 // Routes
