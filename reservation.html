@@ -13,6 +13,30 @@
 </head>
 
 <body>
+<<<<<<< HEAD
+    <script type="text/javascript">
+        // Question: What does this code do?
+        $("#add-btn").on("click", function (event) {
+            event.preventDefault();
+
+            var newCharacter = {
+                name: $("#name").val().trim(),
+                role: $("#role").val().trim(),
+                age: $("#age").val().trim(),
+                forcePoints: $("#force-points").val().trim()
+            };
+
+            // Question: What does this code do??
+            $.post("/api/characters", newCharacter)
+                .then(function (data) {
+                    console.log(data);
+                    alert("Adding reservation...");
+                });
+
+        });
+
+    </script>
+=======
 
   <div class="container">
     <div class="jumbotron">
@@ -93,6 +117,7 @@
     }); -->
 
   </script>
+>>>>>>> 5f82decb629f9a50202d0c210ba307f8f8935c62
 </body>
 
 </html>

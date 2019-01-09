@@ -36,4 +36,28 @@
     <script src="./node_modules/foundation-sites/js/foundation.core.js"></script>
 
 </body>
+
+<script type="text/javascript">
+    // Question: What does this code do?
+    $("#add-btn").on("click", function(event) {
+      event.preventDefault();
+
+      var guests = {
+        name: $("#name").val().trim(),
+        phoneNumber: $("#phoneNumber").val().trim(),
+        email: $("#email").val().trim(),
+        forcePoints: $("#uniqueID").val().trim()
+      };
+
+      // Question: What does this code do??
+      $.post("/api/characters", newCharacter)
+        .then(function(data) {
+          console.log(data);
+          alert("Adding character...");
+        });
+
+    });
+
+  </script>
+
 </html>
