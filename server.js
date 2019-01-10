@@ -1,77 +1,39 @@
-// Dependencies
-// =============================================================
-var express = require("express");
-var path = require("path");
+// ==============================================================================
+// DEPENDENCIES
+// Series of npm packages that we will use to give our server useful functionality
+// ==============================================================================
 
-// Sets up the Express App
-// =============================================================
+var express = require("express");
+
+// ==============================================================================
+// EXPRESS CONFIGURATION
+// This sets up the basic properties for our express server
+// ==============================================================================
+
+// Tells node that we are creating an "express" server
 var app = express();
-var PORT = process.env.PORT || 3000;
+
+// Sets an initial port. We"ll use this later in our listener
+var PORT = process.env.PORT || 8080;
 
 // Sets up the Express app to handle data parsing
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Guests variable
-// =============================================================
+// ================================================================================
+// ROUTER
+// The below points our server to a series of "route" files.
+// These routes give our server a "map" of how to respond when users visit or request data from various URLs.
+// ================================================================================
 
-var guests = [{
-    name: "Brittany Wells",
-    phoneNumber: "987-098-6666",
-    email: "ast98@gmail.com",
-    uniqueID: "1"
-}];
+require("./routes/apiRoutes")(app);
+require("./routes/htmlRoutes")(app);
 
-// Routes
-// =============================================================
-// Basic route that sends the user first to the AJAX Page
-app.get("/", function (req, res) {
-    res.sendFile(path.join(__dirname, "index.html"));
+// =============================================================================
+// LISTENER
+// The below code effectively "starts" our server
+// =============================================================================
+
+app.listen(PORT, function() {
+  console.log("App listening on PORT: " + PORT);
 });
-
-app.get("/tables", function (req, res) {
-    res.sendFile(path.join(__dirname, "tables.html"));
-});
-app.get("/reservation", function (req, res) {
-    res.sendFile(path.join(__dirname, "reservation.html"));
-});
-
-//Displays resercations or returns no reservations made?
-app.get("/api/guests/:guest", function (req, res) {
-    var chosen = req.params.guests;
-
-    console.log(chosen);
-
-    for (var i = 0; i < guests.length; i++) {
-        if (chosen === guests[i].routeName) {
-            return res.json(guests[i]);
-        }
-    }
-
-    return res.json(false);
-});
-
-// Create New Characters - takes in JSON input
-app.post("/api/guests", function (req, res) {
-    // req.body hosts is equal to the JSON post sent from the user
-    // This works because of our body parsing middleware
-    var newGuest = req.body;
-
-    // Using a RegEx Pattern to remove spaces from newCharacter
-    // You can read more about RegEx Patterns later https://www.regexbuddy.com/regex.html
-    newGuest.routeName = newGuest.name.replace(/\s+/g, "").toLowerCase();
-
-    console.log(newGuest);
-
-    guests.push(newGuest);
-
-    res.json(newGuest);
-});
-
-
-// Starts the server to begin listening
-// =============================================================
-app.listen(PORT, function () {
-    console.log("App listening on PORT " + PORT);
-});
-
